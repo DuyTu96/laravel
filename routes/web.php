@@ -23,10 +23,12 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('list-user','UserController@index');
         Route::get('list-user/create','UserController@create');
         Route::get('list-user/edit/{id}','UserController@edit');
+        Route::post('list-user/create','UserController@store');
     });
     Route::group(['prefix' => 'product'], function() {
         Route::get('list-product','ProductController@index');
         Route::get('list-product/create','ProductController@create');
         Route::get('list-product/edit/{id}','ProductController@edit');
+        Route::post('list-product/create','ProductController@store');
     });
 });

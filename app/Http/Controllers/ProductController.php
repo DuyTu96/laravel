@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
@@ -13,7 +15,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('admin.product.index');
+        $category= Category::all();
+        $product= Product::all();
+        return view('admin.product.index',['category'=>$category],['product'=>$product]);
     }
 
     /**
@@ -23,7 +27,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('admin.product.create');
+        $category= Category::all();
+        return view('admin.product.create',['category'=>$category]);
     }
 
     /**
@@ -34,7 +39,20 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'category_id'=>'required|numeric',
+            'name'=> 'required',
+            'price'=>'numeric|required',
+            'size'=>'required',
+            'is_highlight'=>'boolean|required',
+            'quantity'=>'numeric|required|max:100',
+            'description'=>'max:150'
+        ]);
+        $attributes=$request->only(
+            'category_id','name','price','size','is_highlight','quantity','description'
+        );
+        $product= Product::create($attributes);
+        return redirect('admin/product/list-product')->with('success','Add product success');
     }
 
     /**

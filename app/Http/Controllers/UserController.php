@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -13,7 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin.user.index');
+        $user= User::all();
+        return view('admin.user.index',['user'=>$user]);
     }
 
     /**
@@ -34,7 +36,18 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'email'=>'email|required|max:50',
+            'password'=>'required|min:6|max:20',
+            'name'=>'required|min:3|max:50',
+            'phone'=>'numeric'
+        ]);
+        $atttributes=$request->only([
+            'email','password','name','phone'
+        ]);
+
+        $user= User::create($atttributes);
+        return redirect('admin/user/list-user')->with('success','Create User Success');
     }
 
     /**

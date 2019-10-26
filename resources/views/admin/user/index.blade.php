@@ -9,7 +9,7 @@
             <li class="breadcrumb-item">
                 <a href="#">Dashboard</a>
             </li>
-            <li class="breadcrumb-item active">Tables</li>
+            <li class="breadcrumb-item active">List User</li>
         </ol>
 
         <!-- DataTables Example -->
@@ -28,51 +28,35 @@
                         <!--/.row-->
                         <div class="bootstrap-table">
                             <div class="table-responsive">
-                                <a href="adduser.html" class="btn btn-primary">Thêm Thành viên</a>
+                                <a href="{{ url('admin/user/list-user/create') }}" class="btn btn-primary">Thêm Thành viên</a>
                                 <table class="table table-bordered" style="margin-top:20px;">
 
                                     <thead>
                                         <tr class="bg-primary">
                                             <th>ID</th>
                                             <th>Email</th>
-                                            <th>Full</th>
-                                            <th>Address</th>
+                                            <th>Name</th>
                                             <th>Phone</th>
-                                            <th>Level</th>
                                             <th width='18%'>Tùy chọn</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Admin@gmail.com</td>
-                                            <td>Nguyễn thế phúc</td>
-                                            <td>Thường tín</td>
-                                            <td>0356653300</td>
-                                            <td>1</td>
-                                            <td>
-                                                <a href="#" class="btn btn-warning"><i class="fa fa-pencil"
-                                                        aria-hidden="true"></i> Sửa</a>
-                                                <a href="#" class="btn btn-danger"><i class="fa fa-trash"
-                                                        aria-hidden="true"></i> Xóa</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Admin@gmail.com</td>
-                                            <td>Nguyễn thế phúc</td>
-                                            <td>Thường tín</td>
-                                            <td>0356653300</td>
-                                            <td>1</td>
-                                            <td>
-                                                <a href="#" class="btn btn-warning"><i class="fa fa-pencil"
-                                                        aria-hidden="true"></i> Sửa</a>
-                                                <a href="#" class="btn btn-danger"><i class="fa fa-trash"
-                                                        aria-hidden="true"></i> Xóa</a>
-                                            </td>
-                                        </tr>
-
+                                      @forelse ($user as $user)
+                                      <tr>
+                                          <td>{{ $user->id }}</td>
+                                          <td>{{ $user->email }}</td>
+                                          <td>{{ $user->name }}</td>
+                                          <td>{{ $user->phone }}</td>
+                                          <td>
+                                              <a href="#" class="btn btn-warning"><i class="fa fa-pencil"
+                                                      aria-hidden="true"></i> Sửa</a>
+                                              <a href="#" class="btn btn-danger"><i class="fa fa-trash"
+                                                      aria-hidden="true"></i> Xóa</a>
+                                          </td>
+                                      </tr>  
+                                      @empty
+                                          User empty!!!!!!!!
+                                      @endforelse
                                     </tbody>
                                 </table>
                                 <div align='right'>
